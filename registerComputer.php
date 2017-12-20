@@ -12,7 +12,7 @@ require_once('config/config.php');
 require_once('libs/phputils/php/phputils.class.php');
 require_once('libs/userHandler/php/loginHandler.class.php');
 
-if((!intval($_POST['id'])) || (!$_POST['password'])) {
+if((!$_POST['id']) || (!$_POST['password'])) {
     closeScript('Missing ID/Password');
 }
 

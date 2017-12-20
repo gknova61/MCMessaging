@@ -46,7 +46,7 @@ function registerComputer($id,$passwordFromUser) {
     if(query("SELECT id FROM users WHERE id='$id'")) {
         return false;
     }else {
-        query("INSERT INTO `mcmessaging`.`users`(`id`,`password`,`salt`) VALUES (".$id.",'".mysqli_real_escape_string($con,$passwordFromUser)."','".mysqli_real_escape_string($con,$salt)."');");
+        query("INSERT INTO `mcmessaging`.`users`(`id`,`password`,`salt`,`ip`) VALUES ('".mysqli_real_escape_string($con,$id)."','".mysqli_real_escape_string($con,$passwordFromUser)."','".mysqli_real_escape_string($con,$salt)."','". mysqli_real_escape_string($con,get_client_ip()) ."');");
         return true;
     }
 }
