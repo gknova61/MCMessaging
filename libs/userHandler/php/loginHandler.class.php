@@ -50,3 +50,25 @@ function registerComputer($id,$passwordFromUser) {
         return true;
     }
 }
+
+/**
+ * @brief Checks if given ID is in a valid foramt
+ * @param $idToValidate
+ * @return bool if valid ID
+ */
+function isValidID($idToValidate) {
+    $valid = true;
+    if(strlen($idToValidate) != 49) {
+        $valid = false;
+    }else if(substr($idToValidate,0,2) != "gk") {
+        echo substr($idToValidate,0,2);
+        $valid = false;
+    }else if(substr($idToValidate,16,3) != "nov") {
+        echo substr($idToValidate,16,3);
+        $valid = false;
+    }else if(substr($idToValidate,33,3) != "a61") {
+        echo substr($idToValidate,33,3);
+        $valid = false;
+    }
+    return $valid;
+}

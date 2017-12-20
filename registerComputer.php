@@ -16,6 +16,10 @@ if((!intval($_POST['id'])) || (!$_POST['password'])) {
     closeScript('Missing ID/Password');
 }
 
+if(!isValidID($_POST['id'])) {
+    closeScript('ID is in invalid format, please refer to README');
+}
+
 if((strlen($_POST['password']) < 8) || (!preg_match('~[0-9]~',$_POST['password']))) {
     closeScript('Password must be at least 8 characters long and have at least one number');
 }
