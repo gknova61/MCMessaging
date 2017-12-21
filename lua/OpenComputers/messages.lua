@@ -73,14 +73,15 @@ function message.send(toId,message)
         return false
     end
 
-    content = message.getInetPageContent(host .. "/send.php", {id = id, password = password, to = toId, message = message})
-    if content == "success" then
-        return true
-    else
-        if(verbose) then
-            print(line)
+    for line in internet.request(host .. "/send.php",{id = id, password = password, to = toId, message = message}) do
+        if line == "success" then
+            return true
+        else
+            if(verbose) then
+                print(line)
+            end
+            return false
         end
-        return false
     end
 end
 
