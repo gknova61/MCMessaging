@@ -43,7 +43,7 @@ function registerComputer($id,$passwordFromUser) {
     $passwordFromUser = $salt . $passwordFromUser;
     $passwordFromUser = hash('sha256',$passwordFromUser);
     
-    if(query("SELECT id FROM users WHERE id='$id'")) {
+    if(query("SELECT id FROM users WHERE id='".mysqli_real_escape_string($con,$id)."'")) {
         return false;
     }else {
         query("INSERT INTO `mcmessaging`.`users`(`id`,`password`,`salt`,`ip`) VALUES ('".mysqli_real_escape_string($con,$id)."','".mysqli_real_escape_string($con,$passwordFromUser)."','".mysqli_real_escape_string($con,$salt)."','". mysqli_real_escape_string($con,get_client_ip()) ."');");
@@ -71,4 +71,18 @@ function isValidID($idToValidate) {
         $valid = false;
     }
     return $valid;
+}
+
+/**
+ * @brief Check if given ID is already in the database
+ * @param $idToCheck
+ * @return bool
+ */
+function isIDTaken($idToCheck) {
+    global $con;
+
+    if(query("SELECT id FROM users WHERE id='".mysqli_real_escape_string($con,$idToCheck)."'")) {
+        return true;
+    }
+    return false;
 }
