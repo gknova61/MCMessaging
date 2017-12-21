@@ -1,4 +1,5 @@
-local internet = require 'internet'
+local internet = require("internet")
+local JSON = require("json")
 
 local verbose = true
 local host = "http://192.241.212.78"
@@ -93,11 +94,13 @@ function message.getUnreadMessages()
     end
 
     content = message.getInetPageContent(host .. "/getUnreadMessages.php", {id = id, password = password,})
-    if(line == "false") then
+    if((line == "false") or (line == "Invalid ID/Password")) then
+        if((verbose) and (line == "Invalid ID/Password")) then
+            print(line)
+        end
         return false
     else
-        -- Decode JSON
-        return content
+        return JSON:decode(content)
     end
 end
 

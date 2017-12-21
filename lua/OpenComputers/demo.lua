@@ -22,7 +22,7 @@ local function getYesOrNoFromUser(question)
 end
 
 while(true) do
-    print("\nWelcome to the MCMessaging Example Program!")
+    print("Welcome to the MCMessaging Example Program!")
     print("Please choose from the following options:")
     print("1. Register new Computer")
     print("2. Set login with existing credentials")
@@ -37,7 +37,7 @@ while(true) do
 
     if(optionFromUser == "1") then -- Register
         local continue = true
-        if(id ~= "") then
+        if(message.isLoginSet()) then
             decision = getYesOrNoFromUser("It looks like you've already got login credentials set. Are you sure you want to clear them? (y/n):")
             if not decision then continue = false end
         end
@@ -46,19 +46,17 @@ while(true) do
             decision = getYesOrNoFromUser("Would you like to autogenerate an ID? (y/n)")
             if not decision then
                 print("Please enter a valid ID: ")
-                idTemp = io.read()
+                id = io.read()
             else
-                idTemp = message.getID()
-                print("Your ID is: "..idTemp)
+                id = message.getID()
+                print("Your ID is: "..id)
             end
 
             print("Please enter a password: ")
-            passwordTemp = io.read()
+            password = io.read()
 
-            if(message.register(idTemp,passwordTemp)) then
+            if(message.register(id,password)) then
                 print("Success")
-                id = idTemp
-                password = passwordTemp
                 message.setLogin(id,password)
             else
                 print("Error occured on registering a new computer")
@@ -93,7 +91,16 @@ while(true) do
             if(not newMessages) then
                 print("No new messages")
             else
-                print(newMessages)
+                numOfMessages = 0
+                for messageNum,messageTable in pairs(newMessages) do
+                    numOfMessages = numOfMessages + 1
+                    print("Message #"..numOfMessages)
+                    print("From: "..messageTable["idFrom"])
+                    print("Message: "..messageTable["message"])
+                    print("Time Sent: "..messageTable["timeSent"])
+                    print()
+                end
+                print("Total New Messages: "..tostring(numOfMessages))
             end
         else
             print("ERROR: You need to either set a login, or register this computer before checking your messages")
@@ -104,5 +111,6 @@ while(true) do
         print("That doesn't seem like a valid input, please enter a number between 1 and 5 (inclusive)")
     end
 
-    os.sleep(2)
+    print("\nHit Enter to go back to main menu")
+    io.read()
 end
