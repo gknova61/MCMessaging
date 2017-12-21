@@ -73,22 +73,30 @@ while(true) do
         message.setLogin(id,password)
         print("Login set")
     elseif(optionFromUser == "3") then -- Send Message
-        print("Please enter the ID you'd like to send a message to: ")
-        to = io.read()
-        print("Please enter the message you'd like to send (up to 200chars): ")
-        messageToSend = io.read()
+        if(message.isLoginSet()) then
+            print("Please enter the ID you'd like to send a message to: ")
+            to = io.read()
+            print("Please enter the message you'd like to send (up to 200chars): ")
+            messageToSend = io.read()
 
-        if(message.send(to,messsageToSend)) then
-            print("Success")
+            if(message.send(to,messsageToSend)) then
+                print("Success")
+            else
+                print("An error occured on sending message")
+            end
         else
-            print("An error occured on sending message")
+            print("ERROR: You need to either set a login, or register this computer before sending a message")
         end
     elseif(optionFromUser == "4") then -- Check for unread messages
-        newMessages = message.getUnreadMessages()
-        if(not newMessages) then
-            print("No new messages")
+        if(message.isLoginSet()) then
+            newMessages = message.getUnreadMessages()
+            if(not newMessages) then
+                print("No new messages")
+            else
+                print(newMessages)
+            end
         else
-            print(newMessages)
+            print("ERROR: You need to either set a login, or register this computer before checking your messages")
         end
     elseif(optionFromUser == "5") then -- Exit
         break

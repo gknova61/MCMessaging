@@ -28,6 +28,11 @@ function message.setServer(newHost)
     host = newHost
 end
 
+-- Getter for checking if login credentials are set
+function message.isLoginSet()
+    return isLoginSet
+end
+
 -- Set login credentials to be used in send and receive functions, will not be validated
 function message.setLogin(idLogin,passwordLogin)
     isLoginSet = true
