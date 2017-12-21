@@ -22,7 +22,7 @@ if((!$_POST['id']) || (!$_POST['password'])) {
 $con = MySQLConnect();
 
 if(authenticateComputer($id,$passwordFromUser)) {
-    echo json_encode(query("SELECT * FROM `messages` WHERE idTo='".mysqli_real_escape_string($con,$id). "' AND accessed IS NULL;"));
+    echo json_encode(query("SELECT idFrom,message,timeSent FROM `messages` WHERE idTo='".mysqli_real_escape_string($con,$id). "' AND accessed IS NULL;"));
     query("UPDATE `messages` SET `accessed` = '". mysqli_real_escape_string($con,date('Y-m-d H:i:s', time())) ."' WHERE idTo='".mysqli_real_escape_string($con,$id). "' AND accessed IS NULL;");
 }else {
     closeScript("Invalid ID/Password");
